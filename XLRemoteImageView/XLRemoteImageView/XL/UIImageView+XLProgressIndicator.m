@@ -93,6 +93,10 @@ static char kXLImageProgressIndicatorKey;
                 placeholderImage:placeholderImage
                          success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                              [weakSelf.xl_progressIndicatorView removeFromSuperview];
+
+                             NSData *data = (NSData *)image; // this fixes a crash as this is actually an NSData object
+                             image = [UIImage imageWithData:data];
+
                              weakSelf.image = image;
                              if (imageDidAppearBlock){
                                  imageDidAppearBlock(weakSelf);
